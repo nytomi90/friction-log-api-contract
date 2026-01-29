@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Friction Log API
+  version: 1.0.0
+  description: |
+    REST API for tracking daily life friction items and measuring progress in eliminating them.
+
+    This API provides endpoints for:
+    - Creating, reading, updating, and deleting friction items
+    - Tracking friction status (Not Fixed, In Progress, Fixed)
+    - Calculating friction scores and analytics
+    - Viewing trends and category breakdowns
+  contact:
+    name: Friction Log
+    url: https://github.com/nytomi90/friction-log-api-contract
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+tags:
+  - name: health
+    description: Health check endpoints
+  - name: friction-items
+    description: Friction item CRUD operations
+  - name: analytics
+    description: Analytics and reporting
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Check if the API server is running
+      operationId: healthCheck
+      tags:
+        - health
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                required:
+                  - status
+
+  /api/friction-items:
+    get:
+      summary: List friction items
+      description: Get all friction items with optional filtering
+      operationId: listFrictionItems
+      tags:
+        - friction-items
+      parameters:
+        - name: status
+          in: query
+          description: Filter by status
+          required: false
+          schema:
+            $ref: './schemas/common.yaml#/components/schemas/Status'
+        - name: category
+          in: query
+          description: Filter by category
+          required: false
+          schema:
+            $ref: './schemas/common.yaml#/components/schemas/Category'
+      responses:
+        '200':
+          description: List of friction items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+
+    post:
+      summary: Create friction item
+      description: Create a new friction item
+      operationId: createFrictionItem
+      tags:
+        - friction-items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemCreate'
+      responses:
+        '201':
+          description: Friction item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+
+  /api/friction-items/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Friction item ID
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+
+    get:
+      summary: Get friction item
+      description: Get a single friction item by ID
+      operationId: getFrictionItem
+      tags:
+        - friction-items
+      responses:
+        '200':
+          description: Friction item found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+        '404':
+          description: Friction item not found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Update friction item
+      description: Update an existing friction item
+      operationId: updateFrictionItem
+      tags:
+        - friction-items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemUpdate'
+      responses:
+        '200':
+          description: Friction item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+        '404':
+          description: Friction item not found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete friction item
+      description: Delete a friction item by ID
+      operationId: deleteFrictionItem
+      tags:
+        - friction-items
+      responses:
+        '204':
+          description: Friction item deleted successfully
+        '404':
+          description: Friction item not found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+
+  /api/analytics/score:
+    get:
+      summary: Get current friction score
+      description: Calculate current friction score (sum of annoyance levels for unfixed items)
+      operationId: getCurrentScore
+      tags:
+        - analytics
+      responses:
+        '200':
+          description: Current friction score
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/analytics.yaml#/components/schemas/CurrentScore'
+
+  /api/analytics/trend:
+    get:
+      summary: Get friction trend
+      description: Get historical friction scores over time
+      operationId: getFrictionTrend
+      tags:
+        - analytics
+      parameters:
+        - name: days
+          in: query
+          description: Number of days to include in trend (default 30)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 365
+            default: 30
+      responses:
+        '200':
+          description: Friction trend data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/analytics.yaml#/components/schemas/TrendDataPoint'
+
+  /api/analytics/by-category:
+    get:
+      summary: Get friction by category
+      description: Get friction score breakdown by category (only active items)
+      operationId: getFrictionByCategory
+      tags:
+        - analytics
+      responses:
+        '200':
+          description: Friction breakdown by category
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/analytics.yaml#/components/schemas/CategoryBreakdown'
