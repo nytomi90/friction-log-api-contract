@@ -1,0 +1,92 @@
+{
+  "friction_item_response": {
+    "id": 42,
+    "title": "Slow internet connection at home office",
+    "description": "The WiFi signal is weak in my home office, causing frequent disconnections during video calls",
+    "annoyance_level": 4,
+    "category": "digital",
+    "status": "not_fixed",
+    "created_at": "2026-01-29T10:30:00Z",
+    "updated_at": "2026-01-29T10:30:00Z",
+    "fixed_at": null
+  },
+  "friction_item_list": [
+    {
+      "id": 1,
+      "title": "Kitchen cabinet door squeaks",
+      "description": null,
+      "annoyance_level": 2,
+      "category": "home",
+      "status": "not_fixed",
+      "created_at": "2026-01-25T08:15:00Z",
+      "updated_at": "2026-01-25T08:15:00Z",
+      "fixed_at": null
+    },
+    {
+      "id": 2,
+      "title": "Commute takes too long",
+      "description": "Need to leave 30 minutes early to avoid traffic",
+      "annoyance_level": 4,
+      "category": "work",
+      "status": "in_progress",
+      "created_at": "2026-01-26T07:00:00Z",
+      "updated_at": "2026-01-28T18:00:00Z",
+      "fixed_at": null
+    },
+    {
+      "id": 3,
+      "title": "Password manager syncing issues",
+      "description": "Sometimes passwords don't sync between devices",
+      "annoyance_level": 3,
+      "category": "digital",
+      "status": "fixed",
+      "created_at": "2026-01-20T12:00:00Z",
+      "updated_at": "2026-01-27T15:30:00Z",
+      "fixed_at": "2026-01-27T15:30:00Z"
+    }
+  ],
+  "current_score": {
+    "current_score": 23,
+    "active_count": 7
+  },
+  "trend": [
+    {
+      "date": "2026-01-23",
+      "score": 28
+    },
+    {
+      "date": "2026-01-24",
+      "score": 26
+    },
+    {
+      "date": "2026-01-25",
+      "score": 28
+    },
+    {
+      "date": "2026-01-26",
+      "score": 32
+    },
+    {
+      "date": "2026-01-27",
+      "score": 29
+    },
+    {
+      "date": "2026-01-28",
+      "score": 25
+    },
+    {
+      "date": "2026-01-29",
+      "score": 23
+    }
+  ],
+  "category_breakdown": {
+    "home": 8,
+    "work": 12,
+    "digital": 5,
+    "health": 3,
+    "other": 0
+  },
+  "error_response": {
+    "detail": "Friction item not found"
+  }
+}

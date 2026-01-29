@@ -1,0 +1,42 @@
+components:
+  schemas:
+    Category:
+      type: string
+      enum:
+        - home
+        - work
+        - digital
+        - health
+        - other
+      description: |
+        Category of the friction item:
+        - home: Home and family related friction
+        - work: Work and professional friction
+        - digital: Technology and digital friction
+        - health: Health and wellness friction
+        - other: Other types of friction
+      example: work
+
+    Status:
+      type: string
+      enum:
+        - not_fixed
+        - in_progress
+        - fixed
+      description: |
+        Status of the friction item:
+        - not_fixed: Issue identified but not yet addressed
+        - in_progress: Actively working on fixing the issue
+        - fixed: Issue has been resolved
+      default: not_fixed
+      example: not_fixed
+
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error message describing what went wrong
+          example: Friction item not found
+      required:
+        - detail

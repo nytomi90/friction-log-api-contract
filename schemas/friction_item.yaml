@@ -1,0 +1,118 @@
+components:
+  schemas:
+    FrictionItemCreate:
+      type: object
+      description: Schema for creating a new friction item
+      required:
+        - title
+        - annoyance_level
+        - category
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Short description of the friction
+          example: Slow internet connection at home office
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          description: Optional detailed description of the friction
+          example: The WiFi signal is weak in my home office, causing frequent disconnections during video calls
+        annoyance_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: |
+            Severity rating from 1 (minor annoyance) to 5 (major disruption)
+            - 1: Barely noticeable
+            - 2: Mildly annoying
+            - 3: Moderately frustrating
+            - 4: Very frustrating
+            - 5: Extremely disruptive
+          example: 4
+        category:
+          $ref: '../schemas/common.yaml#/components/schemas/Category'
+
+    FrictionItemUpdate:
+      type: object
+      description: Schema for updating an existing friction item (all fields optional)
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Short description of the friction
+          example: Slow internet connection at home office
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          description: Detailed description of the friction
+          example: The WiFi signal is weak in my home office, causing frequent disconnections during video calls
+        annoyance_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Severity rating from 1 (minor) to 5 (major)
+          example: 4
+        category:
+          $ref: '../schemas/common.yaml#/components/schemas/Category'
+        status:
+          $ref: '../schemas/common.yaml#/components/schemas/Status'
+
+    FrictionItemResponse:
+      type: object
+      description: Complete friction item with all fields including server-generated values
+      required:
+        - id
+        - title
+        - annoyance_level
+        - category
+        - status
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the friction item
+          example: 42
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Short description of the friction
+          example: Slow internet connection at home office
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          description: Detailed description of the friction
+          example: The WiFi signal is weak in my home office, causing frequent disconnections during video calls
+        annoyance_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Severity rating from 1 (minor) to 5 (major)
+          example: 4
+        category:
+          $ref: '../schemas/common.yaml#/components/schemas/Category'
+        status:
+          $ref: '../schemas/common.yaml#/components/schemas/Status'
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the item was created
+          example: '2026-01-29T10:30:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the item was last updated
+          example: '2026-01-29T14:45:00Z'
+        fixed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the item status was changed to 'fixed'
+          example: '2026-01-30T09:15:00Z'

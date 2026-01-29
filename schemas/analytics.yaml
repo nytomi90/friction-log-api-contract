@@ -1,0 +1,78 @@
+components:
+  schemas:
+    CurrentScore:
+      type: object
+      description: Current friction score and active item count
+      required:
+        - current_score
+        - active_count
+      properties:
+        current_score:
+          type: integer
+          minimum: 0
+          description: |
+            Sum of annoyance levels for all unfixed items (status != 'fixed').
+            Lower scores are better - goal is to reduce this over time.
+          example: 23
+        active_count:
+          type: integer
+          minimum: 0
+          description: Number of active friction items (status != 'fixed')
+          example: 7
+
+    TrendDataPoint:
+      type: object
+      description: Friction score for a specific date
+      required:
+        - date
+        - score
+      properties:
+        date:
+          type: string
+          format: date
+          description: Date in ISO 8601 format (YYYY-MM-DD)
+          example: '2026-01-29'
+        score:
+          type: integer
+          minimum: 0
+          description: Total friction score for that date
+          example: 18
+
+    CategoryBreakdown:
+      type: object
+      description: |
+        Friction score breakdown by category.
+        Only includes active items (status != 'fixed').
+        Categories with no active items will have a score of 0.
+      required:
+        - home
+        - work
+        - digital
+        - health
+        - other
+      properties:
+        home:
+          type: integer
+          minimum: 0
+          description: Sum of annoyance levels for home category
+          example: 8
+        work:
+          type: integer
+          minimum: 0
+          description: Sum of annoyance levels for work category
+          example: 12
+        digital:
+          type: integer
+          minimum: 0
+          description: Sum of annoyance levels for digital category
+          example: 5
+        health:
+          type: integer
+          minimum: 0
+          description: Sum of annoyance levels for health category
+          example: 3
+        other:
+          type: integer
+          minimum: 0
+          description: Sum of annoyance levels for other category
+          example: 0
