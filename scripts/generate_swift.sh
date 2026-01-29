@@ -42,13 +42,13 @@ EOF
     echo -e "${GREEN}✓ Swift models generated successfully${NC}"
     echo "Output: $OUTPUT_DIR"
 
-elif command -v createapi &> /dev/null; then
+elif command -v create-api &> /dev/null; then
     echo "Using CreateAPI..."
 
-    createapi generate \
+    create-api generate \
         "$PROJECT_ROOT/spec/openapi.yaml" \
         --output "$OUTPUT_DIR" \
-        --module FrictionLogAPI
+        --config-option "module=FrictionLogAPI"
 
     echo -e "${GREEN}✓ Swift models generated successfully${NC}"
     echo "Output: $OUTPUT_DIR"
