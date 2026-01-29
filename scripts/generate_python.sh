@@ -40,7 +40,8 @@ datamodel-codegen \
     --use-title-as-name \
     --field-constraints \
     --snake-case-field \
-    --target-python-version 3.11
+    --target-python-version 3.11 \
+    --openapi-scopes paths schemas
 
 # Create __init__.py for easy imports
 cat > "$OUTPUT_DIR/__init__.py" << 'EOF'
