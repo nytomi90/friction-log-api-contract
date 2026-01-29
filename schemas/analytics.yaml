@@ -6,6 +6,8 @@ components:
       required:
         - current_score
         - active_count
+        - items_over_limit
+        - total_encounters_today
       properties:
         current_score:
           type: integer
@@ -19,6 +21,16 @@ components:
           minimum: 0
           description: Number of active friction items (status != 'fixed')
           example: 7
+        items_over_limit:
+          type: integer
+          minimum: 0
+          description: Number of items that have exceeded their daily encounter limit
+          example: 2
+        total_encounters_today:
+          type: integer
+          minimum: 0
+          description: Total number of encounters across all items today
+          example: 15
 
     TrendDataPoint:
       type: object

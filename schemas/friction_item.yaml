@@ -34,6 +34,12 @@ components:
           example: 4
         category:
           $ref: '../schemas/common.yaml#/components/schemas/Category'
+        encounter_limit:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Optional daily limit for encounters. If set, notifications trigger when exceeded.
+          example: 5
 
     FrictionItemUpdate:
       type: object
@@ -61,6 +67,12 @@ components:
           $ref: '../schemas/common.yaml#/components/schemas/Category'
         status:
           $ref: '../schemas/common.yaml#/components/schemas/Status'
+        encounter_limit:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Optional daily limit for encounters
+          example: 5
 
     FrictionItemResponse:
       type: object
@@ -116,3 +128,25 @@ components:
           nullable: true
           description: Timestamp when the item status was changed to 'fixed'
           example: '2026-01-30T09:15:00Z'
+        encounter_count:
+          type: integer
+          minimum: 0
+          description: Number of times this friction was encountered today (resets daily)
+          example: 3
+          default: 0
+        encounter_limit:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Optional daily limit for encounters. Null means no limit.
+          example: 5
+        last_encounter_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date when the encounter was last incremented (YYYY-MM-DD)
+          example: '2026-01-29'
+        is_limit_exceeded:
+          type: boolean
+          description: True if encounter_count >= encounter_limit (when limit is set)
+          example: false

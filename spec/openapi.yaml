@@ -182,6 +182,39 @@ paths:
               schema:
                 $ref: '../schemas/common.yaml#/components/schemas/ErrorResponse'
 
+  /api/friction-items/{id}/encounter:
+    parameters:
+      - name: id
+        in: path
+        description: Friction item ID
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+
+    post:
+      summary: Increment encounter count
+      description: |
+        Increment the encounter count for this friction item.
+        Resets counter to 1 if it's a new day since last encounter.
+        Returns updated item with is_limit_exceeded flag set.
+      operationId: incrementEncounter
+      tags:
+        - friction-items
+      responses:
+        '200':
+          description: Encounter count incremented successfully
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+        '404':
+          description: Friction item not found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+
   /api/analytics/score:
     get:
       summary: Get current friction score
