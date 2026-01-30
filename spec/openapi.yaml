@@ -207,13 +207,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
+                $ref: '../schemas/friction_item.yaml#/components/schemas/FrictionItemResponse'
         '404':
           description: Friction item not found
           content:
             application/json:
               schema:
-                $ref: './schemas/common.yaml#/components/schemas/ErrorResponse'
+                $ref: '../schemas/common.yaml#/components/schemas/ErrorResponse'
 
   /api/analytics/score:
     get:
