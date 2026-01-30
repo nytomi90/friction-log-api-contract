@@ -18,7 +18,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # Check if datamodel-code-generator is installed
-if ! command -v datamodel-codegen &> /dev/null; then
+if ! python -m datamodel_code_generator --help &> /dev/null; then
     echo "Error: datamodel-code-generator not found"
     echo "Install it with: pip install datamodel-code-generator[http]"
     exit 1
@@ -30,7 +30,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # Generate models
 echo "Generating from spec/openapi.yaml..."
-datamodel-codegen \
+python -m datamodel_code_generator \
     --input "$PROJECT_ROOT/spec/openapi.yaml" \
     --input-file-type openapi \
     --output "$OUTPUT_DIR/models.py" \
@@ -40,7 +40,9 @@ datamodel-codegen \
     --use-title-as-name \
     --field-constraints \
     --snake-case-field \
-    --target-python-version 3.11
+    --target-python-version 3.11 \
+    --openapi-scopes paths \
+    --use-annotated
 
 # Create __init__.py for easy imports
 cat > "$OUTPUT_DIR/__init__.py" << 'EOF'
