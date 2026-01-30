@@ -41,7 +41,7 @@ python -m datamodel_code_generator \
     --field-constraints \
     --snake-case-field \
     --target-python-version 3.11 \
-    --openapi-scopes paths \
+    --openapi-scopes paths schemas \
     --use-annotated
 
 # Create __init__.py for easy imports
